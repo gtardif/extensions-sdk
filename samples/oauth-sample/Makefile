@@ -1,4 +1,4 @@
-IMAGE?=samples/oauth-extension
+IMAGE?=docker/sso-sample-extension
 TAG?=latest
 
 BUILDER=buildx-multi-arch
