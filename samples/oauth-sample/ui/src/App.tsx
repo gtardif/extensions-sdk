@@ -6,9 +6,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const client = createDockerDesktopClient();
 
-const client_id = "Oxuixl3g21aBbJMiWySpjlxUK3qpnUEW";
-const client_secret = "xxxx";
-
 function useDockerDesktopClient() {
   return client;
 }
@@ -26,6 +23,11 @@ export function App() {
   console.log("User", user);
   console.log("Error", error);
 
+  function redirectCallback(url: string) {
+    console.log("redirectCallback: " + url);
+    ddClient.host.openExternal(url);
+  }
+
   return (
     <>
       <Typography variant="h3">Docker extension Oauth demo</Typography>
@@ -40,13 +42,16 @@ export function App() {
       <Stack direction="row" alignItems="start" spacing={2} sx={{ mt: 4 }}>
         <Button
           variant="contained"
-          onClick={() => loginWithRedirect()}
+          onClick={() => {
+            console.log("redirect");
+            loginWithRedirect({ openUrl: redirectCallback });
+          }}
           disabled={isAuthenticated}
         >
           {isAuthenticated ? "You're looged in" : "Login"}
         </Button>
         <TextField
-          label="Oauth response"
+          label={user?.name ?? "not logged in yet"}
           sx={{ width: 480 }}
           disabled
           multiline
