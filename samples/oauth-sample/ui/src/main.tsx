@@ -19,6 +19,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <Auth0Provider
         domain="login-stage.docker.com"
         clientId={client_id}
+        cacheLocation="localstorage"
         authorizationParams={{
           redirect_uri:
             "https://open.docker.com/dashboard/extension-tab?extensionId=docker/sso-sample-extension",

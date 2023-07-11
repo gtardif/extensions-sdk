@@ -12,11 +12,11 @@ RUN npm run build
 
 FROM alpine
 LABEL org.opencontainers.image.title="Oauth sample" \
-    org.opencontainers.image.description="Sample extension logging in with github OAuth service" \
-    org.opencontainers.image.vendor="Awesome Inc." \
+    org.opencontainers.image.description="This sample extension shows how to use Docker SSO within the extension" \
+    org.opencontainers.image.vendor="Docker Inc." \
     com.docker.desktop.extension.api.version="0.3.3" \
     com.docker.extension.screenshots="" \
-    com.docker.extension.detailed-description="" \
+    com.docker.extension.detailed-description="This sample uses the standard auth0 library, using the react flavor. This library is also available in plain JS for single page apps. \nSeveral options are possible to implement SSO and connect to your SAAS services, this sample only shows how to implement SSO directly in your extension, it is also possible to reconcile accounts in your SAAS, before finally redirecting to the extension at the end of the login flow" \
     com.docker.extension.publisher-url="" \
     com.docker.extension.additional-urls="" \
     com.docker.extension.changelog=""

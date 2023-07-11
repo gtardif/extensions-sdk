@@ -18,47 +18,45 @@ export function App() {
   const queryParams = new URLSearchParams(window.location.search);
   console.log("query: " + queryParams.toString());
 
-  const { isAuthenticated, loginWithRedirect, user, error } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, logout, user, error } =
+    useAuth0();
 
   console.log("User", user);
   console.log("Error", error);
 
-  function redirectCallback(url: string) {
-    console.log("redirectCallback: " + url);
-    ddClient.host.openExternal(url);
-  }
+  console.log("loading: window.location", window.location);
 
   return (
     <>
       <Typography variant="h3">Docker extension Oauth demo</Typography>
       <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
-        This is a basic page using Oauth to login in using github Oauth as an
-        example.
+        This is a basic extension using Oauth to login with Docker auth
+        provider.
       </Typography>
       <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
-        Pressing the below button will trigger a login flow and retrieve a
-        github authentication token once the user is authenticated.
+        Pressing the below button will trigger a login flow againts Docker hub.
       </Typography>
       <Stack direction="row" alignItems="start" spacing={2} sx={{ mt: 4 }}>
         <Button
           variant="contained"
           onClick={() => {
-            console.log("redirect");
-            loginWithRedirect({ openUrl: redirectCallback });
+            isAuthenticated
+              ? logout()
+              : loginWithRedirect({ openUrl: ddClient.host.openExternal });
           }}
-          disabled={isAuthenticated}
         >
-          {isAuthenticated ? "You're looged in" : "Login"}
+          {isAuthenticated ? "Logout" : "Login"}
         </Button>
         <TextField
-          label={user?.name ?? "not logged in yet"}
+          label={isAuthenticated ? "logged in" : "not logged in yet"}
           sx={{ width: 480 }}
           disabled
           multiline
           variant="outlined"
           minRows={5}
-          value={response ?? ""}
+          value={user ? user?.name + " - " + user?.email : ""}
         />
+        {user?.picture && <img src={user?.picture} width="100" height="100" />}
       </Stack>
     </>
   );
